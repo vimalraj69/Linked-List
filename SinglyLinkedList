@@ -1,0 +1,176 @@
+class Node {
+    int val;
+    Node next;
+    Node(int val){
+        this.val = val;
+        next = null;
+    }
+}
+class MyLinkedList {
+
+   
+    Node head;
+
+    public MyLinkedList() {
+       
+        head = null;
+    }
+
+    private int size(){
+        int i =0;
+        Node current = head;
+        while(current != null){
+            i++;
+            current = current.next;
+        }
+        return i;
+    }
+    
+    public int get(int index) {
+        int count =0;
+        Node current = head;
+        int size  = size();
+       
+        while(current !=null && count <= size ){
+            if(index == count){
+                return current.val;
+            }
+            current = current.next;
+            count++;
+        }
+        return -1;
+    }
+    
+    public void addAtHead(int val) {
+        Node newNode = new Node(val);
+        if(head == null){
+            head = newNode;
+            return;
+        }
+        newNode.next = head;
+        head = newNode;
+        // display();
+    }
+    
+    public void addAtTail(int val) {
+        if(head == null){
+            addAtHead(val);
+            return;
+        }
+        Node newNode = new Node(val);
+        Node current = head;
+        while(current.next != null){
+            current = current.next;
+        }
+
+        current.next = newNode;
+        
+        // display();
+    }
+    
+    public void addAtIndex(int index, int val) {
+        int size = size();
+        if(size < index){
+            return;
+        }
+        if(index == size ){
+            addAtTail(val);
+            return;
+        }
+
+        if(index == 0){
+            addAtHead(val);
+            return;
+        }
+        // 0 1 2
+        // 1 3 5
+        Node newNode = new Node (val);
+        int count =0;
+        Node current = head;
+        while(count < index-1){
+            current = current.next;
+            count++;
+        }
+        newNode.next = current.next;
+        current.next = newNode;
+        // display();
+    }
+    
+    public void deleteAtIndex(int index) {
+        int size = size();
+        
+        if(index > size || head == null){
+            return ;
+        }
+        if(index ==0 ){
+            deleteAtHead();
+            // display();
+            return;
+        }
+
+        if(index == size-1){
+            deleteAtTail();
+            // display();
+            return;
+        }
+
+        Node current = head;
+        Node previous = null;
+        int count =0;
+
+        while(current != null && count < index ){
+            previous = current;
+            current = current.next;
+            count++;
+            
+        }
+      
+        if(current !=null && current.next != null){
+        previous.next = current.next;
+        }
+        
+    }
+
+    private void deleteAtHead(){
+        if(head != null){
+            head = head.next;
+            return;
+        }
+    }
+
+    private void deleteAtTail(){
+       
+       if(head == null){
+        return ;
+       }
+        Node current = head;
+        while(current.next.next !=null){
+            current = current.next;
+        }
+        current.next = null;
+        
+    }
+
+    // private void display(){
+    //     Node current = head;
+    //     int size = size();
+    //     int i =0;
+    //     while(current != null){
+    //         System.out.print("["+i++ +","+current.val +"] -> ");
+    //         current = current.next;
+    //     }
+    //     System.out.println(" size :"+ size);
+    // }
+
+
+}
+
+/**
+ * Your MyLinkedList object will be instantiated and called as such:
+ * MyLinkedList obj = new MyLinkedList();
+ * int param_1 = obj.get(index);
+ * obj.addAtHead(val);
+ * obj.addAtTail(val);
+ * obj.addAtIndex(index,val);
+ * obj.deleteAtIndex(index);
+ */
